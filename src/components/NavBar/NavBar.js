@@ -1,35 +1,32 @@
-import React from "react";
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import logo from "./LogoKittyCorner.jpg";
+import AdoptionModale from "../AdoptionModal/AdoptionModal";
+import './NavBar.css';
 
 export default function NavBar() {
-    return (
-        <>
-        
-            <Navbar bg="dark" data-bs-theme="dark">
-                <Container>
-                
-                
-                    <Navbar.Brand to="home">
-                        <Link to="/">NavBar</Link>
-                    </Navbar.Brand>
-                    
-                    <Nav className="me-auto">
-                    <Nav.Link>
-                            <Link to="/" className="title">NavBar</Link>
-                        </Nav.Link>
-                        
-                        
-                        <Nav.Link href="features">Features</Nav.Link>
-                        <Nav.Link href="pricing">Pricing</Nav.Link>
-                    </Nav>
-                </Container>
-            </Navbar>
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
-        </>
-    )
+  return (
+    <div className="header">
+      <ul>
+        <li>
+          <img src={logo} alt="Cat Logo" />
+        </li>
+        <li className="pop-up">
+          <button onClick={openModal} className="add-kitten-button">
+            Bring a Cat Home
+          </button>
+        </li>
+      </ul>
+      <AdoptionModale isOpen={isModalOpen} onClose={closeModal} />
+    </div>
+  );
 }
