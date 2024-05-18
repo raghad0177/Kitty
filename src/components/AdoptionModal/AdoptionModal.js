@@ -51,9 +51,9 @@ const AdoptionModale = ({ isOpen, onClose }) => {
         </div>
         <div className="form-group">
           <label>
-            Origin:
+            Originn:
             <input
-              type="text"
+              type="text" 
               className="form-control"
               name="origin"
               value={origin}
