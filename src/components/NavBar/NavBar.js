@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import logo from "./LogoKittyCorner.jpg";
 import AdoptionModale from "../AdoptionModal/AdoptionModal";
-import './NavBar.css';
+import "./NavBar.css";
 
 export default function NavBar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -10,7 +10,7 @@ export default function NavBar() {
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
+  const handleClose = () => {
     setIsModalOpen(false);
   };
 
@@ -26,7 +26,7 @@ export default function NavBar() {
           </button>
         </li>
       </ul>
-      <AdoptionModale isOpen={isModalOpen} onClose={closeModal} />
+      <AdoptionModale show={isModalOpen} handleClose={handleClose} />
     </div>
   );
 }
