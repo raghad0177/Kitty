@@ -1,15 +1,12 @@
 import React from "react";
-import './Footer.css';
+import "./Footer.css";
 
-
-export default function Footer(){
-    return(
-        <>
-        <div className="Documentation">
-            <h1>Masar@2024</h1>
-            <br/>
-        </div>
-        </>
-        
-    );
+export default function Footer() {
+  return (
+    <>
+      <footer className="footer">
+        Rights Are Reserved © Powered By Masar 2024
+      </footer>
+    </>
+  );
 }
