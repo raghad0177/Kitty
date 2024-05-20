@@ -1,4 +1,22 @@
-/* NavBar.css */
+#AboutUs {
+  font-size: 20px;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ff4081;
+  border-radius: 25px;
+  padding: 10px 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 50%; /* Position vertically in the middle */
+  transform: translateY(-50%);
+  right: 2rem; /* Adjust the distance from the right */
+}
+
+#AboutUs:hover {
+  background-color: #ff4081;
+  color: white;
+}
+
 .header {
   background-color: #fff;
   padding: 1rem 2rem;
@@ -9,6 +27,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
+  position: relative; /* Add relative positioning */
 }
 
 .header ul {
@@ -32,7 +51,6 @@
   border-radius: 50%;
 }
 
-
 .add-kitten-button {
   background-color: #ff4081;
   color: white;
@@ -54,14 +72,10 @@
   content: "";
   position: absolute;
   top: 50%;
-  left: -30px;
-  /* Start position of the cat image */
-  width: 40px;
-  /* Width of the cat image */
-  height: 40px;
-  /* Height of the cat image */
-  background-image: url('./cartoonFlip.png');
-  /* Path to your cat image */
+  left: -30px; /* Start position of the cat image */
+  width: 40px; /* Width of the cat image */
+  height: 40px; /* Height of the cat image */
+  background-image: url('./cartoonFlip.png'); /* Path to your cat image */
   background-size: cover;
   background-repeat: no-repeat;
   transform: translateY(-50%);
@@ -69,28 +83,5 @@
 }
 
 .add-kitten-button:hover::before {
-  left: -10px;
-  /* End position of the cat image */
-}
-
-#AboutUs {
-  font-size: 20px;
-  background-color: #fff;
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 20px;
-  border: 1px solid #FF4081;
-  border-radius: 25px;
-  position: absolute;
-  top: 17%;
-  left: 1700px;
-}
-
-#AboutUs:hover{
-  background-color: #FF4081;
-  color:white;
-  border-radius: 25px;
+  left: -10px; /* End position of the cat image */
 }
