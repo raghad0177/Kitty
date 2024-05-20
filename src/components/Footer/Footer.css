@@ -1,94 +1,80 @@
-/* Footer.css */
+
+/* Footer css */
 
 .footer {
-  background-color: #000;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px 20px;
+  border: 1px solid #ff4081;
+  background-color:#F5F5F5;
+  color: #ff4081;
+  padding: 40px 0;
+  text-align: center;
+  div{
+    display: inline;
+  }
+  img{
+    border-radius: 30px;
+  }
+  img:hover{
+    opacity: 60%;
+    background-color: #ff4081;
+  }
 }
 
 .footer-content {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 1200px;
-}
-
-.footer-nav, .footer-social, .footer-text, .footer-subscribe {
-  flex: 1;
-}
-
-.footer-nav {
-  display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.footer-nav a {
-  color: #fff;
+.footer-nav, .footer-social {
+  margin: 20px 0;
+}
+
+.footer-nav a, .footer-social a {
+  color: #ecf0f1;
   text-decoration: none;
-  margin-bottom: 10px;
+  margin: 0 15px;
+  transition: color 0.3s;
 }
 
-.footer-social {
-  display: flex;
-  justify-content: space-around;
+.footer-nav a:hover, .footer-social a:hover {
+  color: #ff4081;
 }
 
 .footer-social a {
-  color: #fff;
-  font-size: 20px;
-  text-decoration: none;
+  font-size: 24px;
 }
 
 .footer-text {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.footer-subscribe {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.footer-subscribe input {
-  padding: 10px;
-  margin: 5px 0;
-  width: 100%;
-  max-width: 300px;
-  border: none;
-  border-radius: 5px;
-}
-
-.footer-subscribe button {
-  background-color: #fff;
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.footer-subscribe button:hover {
-  background-color: #444;
-  color: #fff;
+  margin: 20px 0;
+  font-size: 14px;
 }
 
 .back-to-top {
-  background-color: #fff;
-  color: #000;
-  border: none;
+  margin-top: 20px;
+  margin-left:20px;
   padding: 10px 20px;
+  background-color: #ff4081;
+  color: #ecf0f1;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 20px;
+  transition: background-color 0.3s;
 }
 
 .back-to-top:hover {
-  background-color: #444;
-  color: #fff;
+  background-color: #ff4080ab;
 }
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .footer-nav, .footer-social {
+    flex-direction: column;
+  }
+
+  .footer-nav a, .footer-social a {
+    margin: 10px 0;
+  }
+}
+
   

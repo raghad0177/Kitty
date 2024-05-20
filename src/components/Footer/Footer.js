@@ -1,34 +1,35 @@
 
 import React from "react";
 import "./Footer.css";
+import imageF from "../../images/f.png";
+import imageI from "../../images/i.png";
+import imageT from "../../images/t.png";
+import imageE from "../../images/e.png";
 
 export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <div className="footer-nav">
-          <a href="#home">Home</a>
-          <a href="#about">About Us</a>
-          <a href="#services">Services</a>
-          <a href="#contact">Contact</a>
+        <div className="footer-text">
+          <p style={{fontSize:"20px"}}>All rights are reserved © Powered by Masar 2024</p>
         </div>
         <div className="footer-social">
-          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-            <i className="fab fa-facebook-f"></i>
+          <a href="https://www.facebook.com/">
+            <img src={imageF}></img>
           </a>
           <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer">
-            <i className="fab fa-twitter"></i>
+          <img src={imageT}></img>
           </a>
           <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-            <i className="fab fa-instagram"></i>
+          <img src={imageI}></img>
+          </a>
+          <a href="https://www.gmail.com/" target="_blank" rel="noopener noreferrer">
+          <img src={imageE}></img>
           </a>
         </div>
-        <div className="footer-text">
-          Rights Are Reserved © Powered By Masar 2024
-        </div>
-        <button className="back-to-top" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-          Back to Top
-        </button>
+        <button className="back-to-top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            Back to Top
+          </button>
       </div>
     </footer>
   );
