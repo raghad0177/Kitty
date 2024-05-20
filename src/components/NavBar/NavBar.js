@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "./LogoKittyCorner.jpg";
-import AdoptionModale from "../AdoptionModal/AdoptionModal";
+import AdoptionModal from "../AdoptionModal/AdoptionModal";
 import "./NavBar.css";
 
 export default function NavBar() {
@@ -14,6 +14,19 @@ export default function NavBar() {
     setIsModalOpen(false);
   };
 
+  const scrollToAboutUs = () => {
+    const aboutUsSection = document.getElementById('aboutUsSection');
+    if (aboutUsSection) {
+      const offsetPosition = aboutUsSection.offsetTop -  200;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+  
+  
+
   return (
     <div className="header">
       <ul>
@@ -26,7 +39,10 @@ export default function NavBar() {
           </button>
         </li>
       </ul>
-      <AdoptionModale show={isModalOpen} handleClose={handleClose} />
+      <AdoptionModal show={isModalOpen} handleClose={handleClose} />
+      <button id="AboutUs" onClick={scrollToAboutUs}>
+        About Us
+      </button>
     </div>
   );
 }

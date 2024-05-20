@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import Select from "react-select";
 import axios from "axios";
-import "./AdoptionModal.css";
+import './AdoptionModal.css';
 
-// Set the data inside the attributes
 function AdoptionModal(props) {
   const [year, setYear] = useState(0);
   const [month, setMonth] = useState(1);
@@ -16,11 +15,13 @@ function AdoptionModal(props) {
   const [imageUrl, setImageUrl] = useState("");
   const [temperament, setTemperament] = useState("");
   const [contactNumber, setContactNumber] = useState("");
+  const [errors, setErrors] = useState({});
 
   //Api For Countries
   useEffect(() => {
     fetchCountries();
   }, []);
+
   const fetchCountries = async () => {
     try {
       const response = await fetch("https://freetestapi.com/api/v1/countries");
@@ -37,22 +38,38 @@ function AdoptionModal(props) {
 
   //Handle Save Changes
   const handleSaveChanges = async () => {
-    const catData = {
-      name,
-      origin: selectedOption?.value,
-      color: selectedColor?.value,
-      age: `${year} Years and ${month} Months`,
-      gender,
-      image: imageUrl,
-      temperament,
-      phone: contactNumber,
-    };
-    //This For adding cats to the database
-    try {
-      await axios.post("https://serverpro-1.onrender.com/addCat", catData);
-      props.handleClose();
-    } catch (error) {
-      console.error("Error saving cat data:", error);
+    // Validation logic
+    const newErrors = {};
+    if (!name) newErrors.name = "Cat name is required.";
+    if (!selectedOption) newErrors.origin = "Origin is required.";
+    if (!selectedColor) newErrors.color = "Color is required.";
+    if (year < 0) newErrors.year = "Year must be a positive number.";
+    if (month < 0 || month > 11) newErrors.month = "Month must be between 0 and 11.";
+    if (!gender) newErrors.gender = "Gender is required.";
+    if (!imageUrl) newErrors.imageUrl = "Image URL is required.";
+    if (!temperament) newErrors.temperament = "Temperament is required.";
+    if (!contactNumber) newErrors.contactNumber = "Contact number is required.";
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
+      const catData = {
+        name,
+        origin: selectedOption?.value,
+        color: selectedColor?.value,
+        age: `${year} Years and ${month} Months`,
+        gender,
+        image: imageUrl,
+        temperament,
+        phone: contactNumber,
+      };
+      //This For adding cats to the database
+      try {
+        await axios.post("https://serverpro-1.onrender.com/addCat", catData);
+        props.handleClose();
+      } catch (error) {
+        console.error("Error saving cat data:", error);
+      }
     }
   };
 
@@ -74,7 +91,7 @@ function AdoptionModal(props) {
       <Modal show={props.show} onHide={props.handleClose}>
         <Modal.Header closeButton style={{ backgroundColor: "#f8588d" }}>
           <Modal.Title style={{ fontSize: "30px", fontFamily: "Monospace" }}>
-            Adoption Modal
+            Bring a Cat Home
           </Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ backgroundColor: "#fa91b4" }}>
@@ -89,7 +106,11 @@ function AdoptionModal(props) {
                 placeholder="Enter cat name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                isInvalid={!!errors.name}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.name}
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formOrigin">
@@ -101,7 +122,9 @@ function AdoptionModal(props) {
                 options={options}
                 value={selectedOption}
                 onChange={setSelectedOption}
+                isInvalid={!!errors.origin}
               />
+              {errors.origin && <div className="invalid-feedback">{errors.origin}</div>}
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formColor">
@@ -113,7 +136,9 @@ function AdoptionModal(props) {
                 options={colors}
                 value={selectedColor}
                 onChange={setSelectedColor}
+                isInvalid={!!errors.color}
               />
+              {errors.color && <div className="invalid-feedback">{errors.color}</div>}
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -130,6 +155,7 @@ function AdoptionModal(props) {
                   type="number"
                   value={year}
                   onChange={(e) => setYear(parseInt(e.target.value))}
+                  isInvalid={!!errors.year}
                 />
                 <span style={{ fontFamily: "Monospace" }}> Years </span>
                 <input
@@ -141,9 +167,12 @@ function AdoptionModal(props) {
                   type="number"
                   value={month}
                   onChange={(e) => setMonth(parseInt(e.target.value))}
+                  isInvalid={!!errors.month}
                 />
                 <span style={{ fontFamily: "Monospace" }}> Months</span>
               </div>
+              {errors.year && <div className="invalid-feedback">{errors.year}</div>}
+              {errors.month && <div className="invalid-feedback">{errors.month}</div>}
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -159,6 +188,7 @@ function AdoptionModal(props) {
                 value="male"
                 style={{ fontFamily: "Monospace" }}
                 onChange={(e) => setGender(e.target.value)}
+                isInvalid={!!errors.gender}
               />
               <Form.Check
                 type="radio"
@@ -168,7 +198,9 @@ function AdoptionModal(props) {
                 value="female"
                 style={{ fontFamily: "Monospace" }}
                 onChange={(e) => setGender(e.target.value)}
+                isInvalid={!!errors.gender}
               />
+              {errors.gender && <div className="invalid-feedback">{errors.gender}</div>}
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formImageUrl">
@@ -181,7 +213,11 @@ function AdoptionModal(props) {
                 placeholder="Enter image URL"
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
+                isInvalid={!!errors.imageUrl}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.imageUrl}
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formTemperament">
@@ -194,14 +230,13 @@ function AdoptionModal(props) {
                 rows={3}
                 value={temperament}
                 onChange={(e) => setTemperament(e.target.value)}
+                isInvalid={!!errors.temperament}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.temperament}
+              </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Form.Label style={{ fontSize: "20px", fontFamily: "Monospace" }}>
-                Age Label:
-              </Form.Label>
-            </Form.Group>
             <Form.Group className="mb-3" controlId="formContactNumber">
               <Form.Label style={{ fontSize: "20px", fontFamily: "Monospace" }}>
                 Contact Number
@@ -212,7 +247,11 @@ function AdoptionModal(props) {
                 placeholder="Enter Phone Number"
                 value={contactNumber}
                 onChange={(e) => setContactNumber(e.target.value)}
+                isInvalid={!!errors.contactNumber}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.contactNumber}
+              </Form.Control.Feedback>
             </Form.Group>
           </Form>
         </Modal.Body>
