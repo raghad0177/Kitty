@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
 
-body {
-    cursor: url('../NavBar/LogoKittyCorner.jpg'), auto;
-}
-
 .home {
   text-align: center;
   padding: 20px;
@@ -93,7 +89,7 @@ h1 {
   margin-bottom: 20px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  border-bottom: 3px solid #ff6347;
+  border-bottom: 3px solid #FF4081;
   display: inline-block;
   padding-bottom: 10px;
 }
