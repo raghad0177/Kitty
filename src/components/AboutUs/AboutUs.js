@@ -22,7 +22,7 @@ function AboutUs() {
             </div>
             <div class="Aya">
                 <a href="https://www.linkedin.com/in/mahmoudal3nbtawi?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">
-                    <img alt="hello" src="https://live.staticflickr.com/65535/53733709961_709af8cdd8_n.jpg" class="developersImages" alt="Linked in"></img>
+                    <img alt="hello" src="https://live.staticflickr.com/65535/53733709961_709af8cdd8_n.jpg" class="developersImages" ></img>
                 </a>
                 <h6>Aya</h6>
             </div>
