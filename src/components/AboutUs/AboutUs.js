@@ -16,31 +16,31 @@ function AboutUs() {
                       filling<br/> your life with warmth and meaning.</span><br/>
             <div class="Mahmoud">
                 <a href="https://www.linkedin.com/in/abdallah-abuhalima-494086282/">
-                    <img src="https://live.staticflickr.com/65535/53733914738_3d15d5042a_b.jpg" class="developersImages"></img>
+                    <img alt="hello"src="https://live.staticflickr.com/65535/53733914738_3d15d5042a_b.jpg" class="developersImages"></img>
                 </a>
                 <h6>Mahmoud</h6>
             </div>
             <div class="Aya">
                 <a href="https://www.linkedin.com/in/mahmoudal3nbtawi?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">
-                    <img src="https://live.staticflickr.com/65535/53733709961_709af8cdd8_n.jpg" class="developersImages" alt="Linked in"></img>
+                    <img alt="hello" src="https://live.staticflickr.com/65535/53733709961_709af8cdd8_n.jpg" class="developersImages" alt="Linked in"></img>
                 </a>
                 <h6>Aya</h6>
             </div>
             <div class="Saja">
                 <a href="https://www.linkedin.com/onboarding/start/people-you-may-know/new/?session_redirect=%2Fauthwall">
-                    <img src="https://live.staticflickr.com/65535/53734136880_9dc6fc45ba_n.jpg" class="developersImages"></img>
+                    <img  alt="hello" src="https://live.staticflickr.com/65535/53734136880_9dc6fc45ba_n.jpg" class="developersImages"></img>
                 </a>
                 <h6>Saja</h6>
             </div>
             <div class="Abdullah">
                 <a href="https://www.linkedin.com/in/abdallah-abuhalima-494086282/">
-                    <img src="https://live.staticflickr.com/65535/53734135775_5dc105fd2d_n.jpg" class="developersImages"></img>
+                    <img alt="hello" src="https://live.staticflickr.com/65535/53734135775_5dc105fd2d_n.jpg" class="developersImages"></img>
                 </a>
                 <h6>Abdullah</h6>
             </div>
             <div class="Ragad">
                 <a href="https://www.linkedin.com/in/raghad-abdullah-bb3848216?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app">
-                    <img src="https://live.staticflickr.com/65535/53734175315_e74f437178_n.jpg" class="developersImages"></img>
+                    <img alt="hello" src="https://live.staticflickr.com/65535/53734175315_e74f437178_n.jpg" class="developersImages"></img>
                 </a>
                 <h6>Raghad</h6>
             </div>
