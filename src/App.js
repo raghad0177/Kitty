@@ -3,7 +3,7 @@ import NavBar from "./components/NavBar/NavBar.js";
 import Home from "./components/Home/Home.js";
 import AboutUs from "./components/AboutUs/AboutUs.js";
 import './App.css'
-import BGB from "./components/BGB1.jpg"
+import BGB from "../src/images/BGB1.jpg"
 
 function App() {
 

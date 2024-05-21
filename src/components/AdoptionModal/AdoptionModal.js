@@ -5,7 +5,7 @@ import axios from "axios";
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 import '../AdoptionModal/AdoptionModal.css';
-import BGM from "./BGM.jpg";
+import BGM from "../../images/BGM.jpg";
 function AdoptionModal(props) {
   const [year, setYear] = useState(0);
   const [month, setMonth] = useState(1);
