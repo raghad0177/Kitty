@@ -7,13 +7,13 @@ function AboutUs() {
             <h1>About Us</h1><br/>
             <span style={{ fontSize: "20px", fontFamily: "Monospace"}}>
                 Adopting a cat isn't just about getting a pet.
-                 It's finding a lifelong friend and opening your heart to <br/> boundless joy.
+                 It's finding a lifelong friend and opening your heart to  boundless joy.
                   Imagine that magical first meeting: their curious eyes, tentative yet hopeful.
-                   In that instant,<br/> a silent promise is made - of trust, companionship, and happiness.
-                    Through playfulness, cuddles, and laughter, <br/>a deep bond blossoms.
+                   In that instant, a silent promise is made - of trust, companionship, and happiness.
+                    Through playfulness, cuddles, and laughter,a deep bond blossoms.
                      But it's more than gaining a pet; it's building a family where both find belonging.
-                      So, <br/>welcoming a cat means embarking on a journey of love and companionship, 
-                      filling<br/> your life with warmth and meaning.</span><br/>
+                      So, welcoming a cat means embarking on a journey of love and companionship, 
+                      filling your life with warmth and meaning.</span><br/>
             <div class="Mahmoud">
                 <a href="https://www.linkedin.com/in/abdallah-abuhalima-494086282/">
                     <img alt="hello"src="https://live.staticflickr.com/65535/53733914738_3d15d5042a_b.jpg" class="developersImages"></img>
