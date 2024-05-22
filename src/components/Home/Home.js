@@ -4,7 +4,7 @@ import "../Home/Home.css";
 // Define the Cat component outside of the Home component
 const CatCard = ({
   name,
-  origin,
+  origin, 
   temperament,
   color,
   image,
