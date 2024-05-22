@@ -1,4 +1,3 @@
-// AdoptionModal.js
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import Select from "react-select";
@@ -6,8 +5,9 @@ import axios from "axios";
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 import BGM from "../../images/BGM.jpg";
-
+import '../AdoptionModal/AdoptionModal.css'
 function AdoptionModal(props) {
+  // use state for all elements and errors
   const [year, setYear] = useState(0);
   const [month, setMonth] = useState(1);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -20,11 +20,13 @@ function AdoptionModal(props) {
   const [errors, setErrors] = useState({});
   const [phone, setPhone] = useState('');
 
+  ////////////////////////////////////////////////////////////////////////////////////////
+
+  //Fetch countries data that came from the api 
   useEffect(() => {
-    // Fetch countries data
     fetchCountries();
   }, []);
-
+  //Get the countries from the api 
   const fetchCountries = async () => {
     try {
       const response = await fetch("https://freetestapi.com/api/v1/countries");
@@ -39,19 +41,45 @@ function AdoptionModal(props) {
     }
   };
 
+  // save change function for the modal 
   const handleSaveChanges = async () => {
-    // Validation logic...
-    
-    if (Object.keys(errors).length === 0) {
+    // Validate form inputs
+    const validationErrors = {};
+    if (!name.trim()) {
+      validationErrors.name = "Required";
+    }
+    if (!selectedOption) {
+      validationErrors.origin = "Required";
+    }
+    if (!selectedColor) {
+      validationErrors.color = "Required";
+    }
+    if (!year && !month) {
+      validationErrors.age = "Required";
+    }
+    if (!gender) {
+      validationErrors.gender = "Required";
+    }
+    if (!imageUrl.trim()) {
+      validationErrors.imageUrl = "Required";
+    }
+    if (!phone.trim()) {
+      validationErrors.phone = "Required";
+    }
+    if (!temperament.trim()) {
+      validationErrors.temperament = "Required";
+    }
+
+    // Check if there are any validation errors
+    if (Object.keys(validationErrors).length === 0) {
       let ageValue = "";
       if (year === 0) {
         ageValue = `${month} Months`;
-      } else if (month === 0){
+      } else if (month === 0) {
         ageValue = `${year} Years`;
       } else {
         ageValue = `${year} Years and ${month} Months`;
       }
-
       const catData = {
         name,
         origin: selectedOption?.value,
@@ -66,21 +94,21 @@ function AdoptionModal(props) {
       try {
         // Post data to add cat to the database
         const response = await axios.post("https://serverpro-qni2.onrender.com/addCat", catData);
-
-        // Extract the ID from the response
-        const { id } = response.data;
-
-        // Call the callback function to notify Home component
+        // send the data that came from the modal after clicking
+        // it to the handle cat add funcyion in the home component
         props.handleCatAdded(catData);
-
         // Close the modal
         props.handleClose();
       } catch (error) {
         console.error("Error saving cat data:", error);
       }
+    } else {
+      // Set validation errors
+      setErrors(validationErrors);
     }
   };
 
+  // generate some colors for choose the cats color
   const colors = [
     { value: "black", label: "Black" },
     { value: "white", label: "White" },
@@ -94,6 +122,7 @@ function AdoptionModal(props) {
     { value: "tuxedo", label: "Tuxedo" },
   ];
 
+
   return (
     <>
       <Modal show={props.show} onHide={props.handleClose} >
@@ -104,31 +133,37 @@ function AdoptionModal(props) {
             </span>
           </center>
         </Modal.Header>
+        {/* the name Section  */}
         <Modal.Body style={{ backgroundImage: `url(${BGM})`, height: '550px' }}>
           <Form>
             <div style={{ marginLeft: '80px' }}>
               <Form.Group className="mb-3" controlId="formCatName">
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <span style={{ fontSize: "20px", fontFamily: "Monospace", marginRight: "34px", marginLeft: '7px' }}>Name</span>
+                  <span className="required"style={{ fontSize: "20px", fontFamily: "Monospace", marginRight: "34px", marginLeft: '7px' }}>Name</span>
                   <Form.Control
+                 
                     type="text"
                     style={{ fontFamily: "Monospace", width: '260px' }}
                     placeholder="Enter cat name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     isInvalid={!!errors.name}
+                    className="required:after"
                   />
                   <Form.Control.Feedback type="invalid">
                     {errors.name}
                   </Form.Control.Feedback>
                 </div>
               </Form.Group>
+              {/* the Origin Section  */}
+
               <Form.Group className="mb-3" controlId="formOrigin">
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <span style={{ fontSize: "20px", fontFamily: "Monospace", marginRight: "18px" }}>
+                  <span className="required" style={{ fontSize: "20px", fontFamily: "Monospace", marginRight: "18px" }}>
                     Origin
                   </span>
                   <Select
+                  className="required:after"
                     style={{ fontFamily: "Monospace", width: '260px' }}
                     options={options}
                     value={selectedOption}
@@ -138,11 +173,14 @@ function AdoptionModal(props) {
                 </div>
                 {errors.origin && <div className="invalid-feedback">{errors.origin}</div>}
               </Form.Group>
+              {/* the color Section  */}
+
               <Form.Group className="mb-3" controlId="formColor">
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <span style={{ fontSize: "20px", fontFamily: "Monospace", marginRight: '25px' }}>
+                  <span className="required" style={{ fontSize: "20px", fontFamily: "Monospace", marginRight: '30px' }}>
                     Color </span>
                   <Select
+                  className="required:after"
                     style={{ fontFamily: "Monospace", width: '260px' }}
                     options={colors}
                     value={selectedColor}
@@ -152,12 +190,14 @@ function AdoptionModal(props) {
                 </div>
                 {errors.color && <div className="invalid-feedback">{errors.color}</div>}
               </Form.Group>
+              {/* the Age Section  */}
               <Form.Group className="mb-3">
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <Form.Label style={{ fontSize: "20px", fontFamily: "Monospace", marginRight: '38px', marginLeft: '10px' }}>
+                  <Form.Label className="required" style={{ fontSize: "20px", fontFamily: "Monospace", marginRight: '38px', marginLeft: '10px' }}>
                     Age
                   </Form.Label>
                   <input
+                  className="required:after"
                     style={{
                       width: "45px",
                       height: "25px",
@@ -185,13 +225,15 @@ function AdoptionModal(props) {
                 {errors.year && <div className="invalid-feedback">{errors.year}</div>}
                 {errors.month && <div className="invalid-feedback">{errors.month}</div>}
               </Form.Group>
+              {/* the Gender Section  */}
               <Form.Group className="mb-3">
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <Form.Label style={{ fontSize: "20px", fontFamily: "Monospace", marginRight: '15px' }}>
+                  <Form.Label className="required" style={{ fontSize: "20px", fontFamily: "Monospace", marginRight: '15px' }}>
                     Gender
                   </Form.Label>
                   <br />
                   <Form.Check
+                  className="required:after"
                     type="radio"
                     label="Male"
                     name="gender"
@@ -215,14 +257,16 @@ function AdoptionModal(props) {
                 {errors.gender && <div className="invalid-feedback">{errors.gender}</div>}
               </Form.Group>
             </div>
+            {/* the Image Section  */}
             <Form.Group className="mb-3" controlId="formImageUrl">
               <div style={{ display: "flex", alignItems: "center" }}>
-                <Form.Label style={{ fontSize: "20px", fontFamily: "Monospace", marginRight: "15px", marginLeft: '80px' }}>
+                <Form.Label className="required" style={{ fontSize: "20px", fontFamily: "Monospace", marginRight: "15px", marginLeft: '80px' }}>
                   Image URL
                 </Form.Label>
                 <Form.Control
+                className="required:after"
                   type="text"
-                  style={{ fontFamily: "Monospace", width: '260px' }}
+                  style={{ fontFamily: "Monospace", width: '250px' }}
                   placeholder="Enter image URL"
                   value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
@@ -233,27 +277,31 @@ function AdoptionModal(props) {
                 {errors.imageUrl}
               </Form.Control.Feedback>
             </Form.Group>
+            {/* the Phone Section  */}
             <Form.Group className="mb-3" controlId="formContactNumber">
               <div style={{ display: "flex", alignItems: "center" }}>
-                <span style={{ fontSize: "20px", fontFamily: "Monospace", marginLeft: "90px" }}>
+                <span className="required" style={{ fontSize: "20px", fontFamily: "Monospace", marginLeft: "90px" }}>
                   Phone
                 </span>
                 <PhoneInput
+                className="required:after"
                   style={{ fontSize: "20px", fontFamily: "Monospace", marginLeft: "50px" }}
                   defaultCountry="jo"
                   value={phone}
                   onChange={(phone) => setPhone(phone)}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {errors.setPhone}
+                  {errors.phone}
                 </Form.Control.Feedback>
               </div>
             </Form.Group>
+            {/* the Temperament Section  */}
             <Form.Group className="mb-3" controlId="formTemperament">
-              <span style={{ fontSize: "20px", fontFamily: "Monospace", marginLeft: "77px" }}>
+              <span className="required" style={{ fontSize: "20px", fontFamily: "Monospace", marginLeft: "77px" }}>
                 Temperament
               </span>
               <Form.Control
+              className="required:after"
                 as="textarea"
                 style={{ fontFamily: "Monospace", width: '300px', marginLeft: "77px" }}
                 rows={2}
@@ -265,6 +313,7 @@ function AdoptionModal(props) {
                 {errors.temperament}
               </Form.Control.Feedback>
             </Form.Group>
+            {/* the Buttons Section  */}
             <Form.Group className="mb-3" controlId="formTemperament">
               <Button
                 style={{ marginLeft: '125px', marginTop: '0px', backgroundColor: "#99ddff", borderRadius: '25px', color: 'black' }}

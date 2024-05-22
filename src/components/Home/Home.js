@@ -5,7 +5,7 @@ import AdoptionModal from "../AdoptionModal/AdoptionModal";
 import "../Home/Home.css";
 import NavBar from "../NavBar/NavBar";
 
-// cards for cats
+// cards for Showing the info. about Adoption cats
 const CatCard = ({ name, origin, temperament, color, image, age, gender, phone }) => {
   return (
     <div className={`cat-card ${gender.toLowerCase()}`}>
@@ -27,16 +27,23 @@ const CatCard = ({ name, origin, temperament, color, image, age, gender, phone }
 function Home() {
   // render data + updated data
   const [cats, setCats] = useState([]);
+
+  //showing the modal 
   const [showModal, setShowModal] = useState(false);
+
+///////////////////////////////////////////////////////////////////////////////////
+
 /// data 
   useEffect(() => {
     fetchData();
   }, []);
-// updated data +data
+
+// show updated data + data
   const fetchData = () => {
     axios
       .get("https://serverpro-qni2.onrender.com/")
       .then((response) => {
+        // set the data inside cats array
         setCats(response.data);
       })
       .catch((error) => {
@@ -46,6 +53,7 @@ function Home() {
 
   /// updated data function 
   const handleCatAdded = (newCatData) => {
+    //add new cat to the cats array
     setCats([...cats, newCatData]);
   };
 ///////////////////////////////////////////////
@@ -61,11 +69,12 @@ function Home() {
 //////////////////////////////////////////////
   return (
     <>
+    {/* send the handel show to the navbar */}
     <NavBar onClick={handleShowModal}/>
     <div className="home">
       <h1>Cats Story</h1>
-     
       <div className="cat-container">
+        {/* get all the cats as a cards from the cats array */}
         {cats.map((cat, index) => (
           <CatCard
             key={index}
@@ -80,6 +89,7 @@ function Home() {
           />
         ))}
       </div>
+      
       <AdoptionModal
         show={showModal}
         handleClose={handleCloseModal}
