@@ -93,7 +93,7 @@ function AdoptionModal(props) {
 
       try {
         // Post data to add cat to the database
-        const response = await axios.post("https://serverpro-qni2.onrender.com/addCat", catData);
+       await axios.post("https://serverpro-qni2.onrender.com/addCat", catData);
         // send the data that came from the modal after clicking
         // it to the handle cat add funcyion in the home component
         props.handleCatAdded(catData);
