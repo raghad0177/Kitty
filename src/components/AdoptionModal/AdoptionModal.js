@@ -1,10 +1,10 @@
+// AdoptionModal.js
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import Select from "react-select";
 import axios from "axios";
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
-import '../AdoptionModal/AdoptionModal.css';
 import BGM from "../../images/BGM.jpg";
 
 function AdoptionModal(props) {
@@ -20,8 +20,8 @@ function AdoptionModal(props) {
   const [errors, setErrors] = useState({});
   const [phone, setPhone] = useState('');
 
-  //Api For Countries
   useEffect(() => {
+    // Fetch countries data
     fetchCountries();
   }, []);
 
@@ -39,24 +39,10 @@ function AdoptionModal(props) {
     }
   };
 
-  //Handle Save Changes
   const handleSaveChanges = async () => {
-    // Validation logic
-    const newErrors = {};
-    if (!name) newErrors.name = "Cat name is required.";
-    if (!selectedOption) newErrors.origin = "Origin is required.";
-    if (!selectedColor) newErrors.color = "Color is required.";
-    if (year < 0) newErrors.year = "Year must be a positive number.";
-    if (month < 0 || month > 11) newErrors.month = "Month must be between 0 and 11.";
-    if (!gender) newErrors.gender = "Gender is required.";
-    if (!imageUrl) newErrors.imageUrl = "Image URL is required.";
-    if (!temperament) newErrors.temperament = "Temperament is required.";
-    if (!phone) newErrors.phone = "Contact number is required.";
-
-    setErrors(newErrors);
-
-///////////////////////////////Manage the data will appears in the card about the Age///////////////////////////////////////////////
-    if (Object.keys(newErrors).length === 0) {
+    // Validation logic...
+    
+    if (Object.keys(errors).length === 0) {
       let ageValue = "";
       if (year === 0) {
         ageValue = `${month} Months`;
@@ -65,7 +51,6 @@ function AdoptionModal(props) {
       } else {
         ageValue = `${year} Years and ${month} Months`;
       }
-///////////////////////////////////////////////////////////////////////////
 
       const catData = {
         name,
@@ -75,11 +60,20 @@ function AdoptionModal(props) {
         gender,
         image: imageUrl,
         temperament,
-        phone: phone,
+        phone,
       };
-      //This For adding cats to the database
+
       try {
-        await axios.post("https://serverpro-qni2.onrender.com/addCat", catData);
+        // Post data to add cat to the database
+        const response = await axios.post("https://serverpro-qni2.onrender.com/addCat", catData);
+
+        // Extract the ID from the response
+        const { id } = response.data;
+
+        // Call the callback function to notify Home component
+        props.handleCatAdded(catData);
+
+        // Close the modal
         props.handleClose();
       } catch (error) {
         console.error("Error saving cat data:", error);
@@ -102,20 +96,16 @@ function AdoptionModal(props) {
 
   return (
     <>
-
-      <Modal show={props.show} onHide={props.handleClose}  >
-        {/* {`/////////////////////////// Headr /////////////////////////////////`} */}
+      <Modal show={props.show} onHide={props.handleClose} >
         <Modal.Header closeButton style={{ backgroundColor: "#ffe6e6", height: '55px' }}>
-          <center> <span style={{ fontSize: "30px", fontFamily: "Monospace", marginLeft: '90px' }}>
-            Bring a Cat Home
-          </span></center>
+          <center>
+            <span style={{ fontSize: "30px", fontFamily: "Monospace", marginLeft: '90px' }}>
+              Bring a Cat Home
+            </span>
+          </center>
         </Modal.Header>
-
-        {/* {`/////////////////////////// /////////////////////////////////`} */}
-
         <Modal.Body style={{ backgroundImage: `url(${BGM})`, height: '550px' }}>
           <Form>
-            {/* {`/////////////////////////// Name /////////////////////////////////`} */}
             <div style={{ marginLeft: '80px' }}>
               <Form.Group className="mb-3" controlId="formCatName">
                 <div style={{ display: "flex", alignItems: "center" }}>
@@ -133,10 +123,6 @@ function AdoptionModal(props) {
                   </Form.Control.Feedback>
                 </div>
               </Form.Group>
-              {/* {`////////////////////////////////////////////////////////////`} */}
-
-              {/* {`///////////////////////////Origin /////////////////////////////////`} */}
-
               <Form.Group className="mb-3" controlId="formOrigin">
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <span style={{ fontSize: "20px", fontFamily: "Monospace", marginRight: "18px" }}>
@@ -152,9 +138,6 @@ function AdoptionModal(props) {
                 </div>
                 {errors.origin && <div className="invalid-feedback">{errors.origin}</div>}
               </Form.Group>
-              {/* {`////////////////////////////////////////////////////////////`} */}
-
-              {/* {`/////////////////////////// Color /////////////////////////////////`} */}
               <Form.Group className="mb-3" controlId="formColor">
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <span style={{ fontSize: "20px", fontFamily: "Monospace", marginRight: '25px' }}>
@@ -169,16 +152,11 @@ function AdoptionModal(props) {
                 </div>
                 {errors.color && <div className="invalid-feedback">{errors.color}</div>}
               </Form.Group>
-              {/* {`////////////////////////////////////////////////////////////`} */}
-
-              {/* {`/////////////////////////// Age /////////////////////////////////`} */}
               <Form.Group className="mb-3">
                 <div style={{ display: "flex", alignItems: "center" }}>
-
                   <Form.Label style={{ fontSize: "20px", fontFamily: "Monospace", marginRight: '38px', marginLeft: '10px' }}>
                     Age
                   </Form.Label>
-
                   <input
                     style={{
                       width: "45px",
@@ -190,7 +168,6 @@ function AdoptionModal(props) {
                     onChange={(e) => setYear(parseInt(e.target.value))}
                     isInvalid={!!errors.year}
                   />
-
                   <span style={{ fontFamily: "Monospace", marginRight: '5px' }}> Years </span>
                   <input
                     style={{
@@ -205,13 +182,9 @@ function AdoptionModal(props) {
                   />
                   <span style={{ fontFamily: "Monospace" }}> Months</span>
                 </div>
-
                 {errors.year && <div className="invalid-feedback">{errors.year}</div>}
                 {errors.month && <div className="invalid-feedback">{errors.month}</div>}
               </Form.Group>
-              {/* {`////////////////////////////////////////////////////////////`} */}
-
-              {/* {`/////////////////////////// Gender /////////////////////////////////`} */}
               <Form.Group className="mb-3">
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <Form.Label style={{ fontSize: "20px", fontFamily: "Monospace", marginRight: '15px' }}>
@@ -241,13 +214,9 @@ function AdoptionModal(props) {
                 </div>
                 {errors.gender && <div className="invalid-feedback">{errors.gender}</div>}
               </Form.Group>
-              {/* {`////////////////////////////////////////////////////////////`} */}
-
             </div>
-            {/* {`/////////////////////////// Image /////////////////////////////////`} */}
             <Form.Group className="mb-3" controlId="formImageUrl">
               <div style={{ display: "flex", alignItems: "center" }}>
-
                 <Form.Label style={{ fontSize: "20px", fontFamily: "Monospace", marginRight: "15px", marginLeft: '80px' }}>
                   Image URL
                 </Form.Label>
@@ -264,16 +233,13 @@ function AdoptionModal(props) {
                 {errors.imageUrl}
               </Form.Control.Feedback>
             </Form.Group>
-            {/* {`///////////////////////////////////////////////////////////`} */}
-
-            {/* {`///////////////////////////Contact Number/////////////////////////////////`} */}
             <Form.Group className="mb-3" controlId="formContactNumber">
               <div style={{ display: "flex", alignItems: "center" }}>
                 <span style={{ fontSize: "20px", fontFamily: "Monospace", marginLeft: "90px" }}>
                   Phone
                 </span>
-
-                <PhoneInput style={{ fontSize: "20px", fontFamily: "Monospace", marginLeft: "50px" }}
+                <PhoneInput
+                  style={{ fontSize: "20px", fontFamily: "Monospace", marginLeft: "50px" }}
                   defaultCountry="jo"
                   value={phone}
                   onChange={(phone) => setPhone(phone)}
@@ -283,7 +249,6 @@ function AdoptionModal(props) {
                 </Form.Control.Feedback>
               </div>
             </Form.Group>
-            {/* {`///////////////////////////Temperament////////////////////////////////`} */}
             <Form.Group className="mb-3" controlId="formTemperament">
               <span style={{ fontSize: "20px", fontFamily: "Monospace", marginLeft: "77px" }}>
                 Temperament
@@ -300,15 +265,9 @@ function AdoptionModal(props) {
                 {errors.temperament}
               </Form.Control.Feedback>
             </Form.Group>
-            {/* {`////////////////////////////////////////////////////////////`} */}
-
-
-
-
-            {/* {`///////////////////////////Buttons ////////////////////////////////`} */}
             <Form.Group className="mb-3" controlId="formTemperament">
-
-              <Button style={{ marginLeft: '125px', marginTop: '0px', backgroundColor: "#99ddff", borderRadius: '25px', color: 'black' }}
+              <Button
+                style={{ marginLeft: '125px', marginTop: '0px', backgroundColor: "#99ddff", borderRadius: '25px', color: 'black' }}
                 className="add-kitten-button"
                 onClick={handleSaveChanges}
               >
@@ -328,13 +287,9 @@ function AdoptionModal(props) {
                 Close
               </Button>
             </Form.Group>
-            {/* {`////////////////////////////////////////////////////////////`} */}
-
           </Form>
         </Modal.Body>
-
       </Modal>
-
     </>
   );
 }

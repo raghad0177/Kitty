@@ -1,20 +1,14 @@
-import React, { useEffect, useState } from "react";
+// Home.js
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import AdoptionModal from "../AdoptionModal/AdoptionModal";
 import "../Home/Home.css";
-// Define the Cat component outside of the Home component
-const CatCard = ({
-  name,
-  origin, 
-  temperament,
-  color,
-  image,
-  age,
-  gender,
-  phone,
-}) => {
+import NavBar from "../NavBar/NavBar";
+
+// cards for cats
+const CatCard = ({ name, origin, temperament, color, image, age, gender, phone }) => {
   return (
-    
-    <div className={`cat-card ${gender.toLowerCase()}`} >
+    <div className={`cat-card ${gender.toLowerCase()}`}>
       <img src={image} alt={`${name}`} className="cat-image" />
       <div className="cat-details">
         <h2>{name}</h2>
@@ -28,11 +22,18 @@ const CatCard = ({
     </div>
   );
 };
+///////////////////////////////////////////////////////////////////////////////
 
 function Home() {
+  // render data + updated data
   const [cats, setCats] = useState([]);
-
+  const [showModal, setShowModal] = useState(false);
+/// data 
   useEffect(() => {
+    fetchData();
+  }, []);
+// updated data +data
+  const fetchData = () => {
     axios
       .get("https://serverpro-qni2.onrender.com/")
       .then((response) => {
@@ -41,15 +42,33 @@ function Home() {
       .catch((error) => {
         console.error("There was an error fetching the data!", error);
       });
-  }, []);
+  };
 
+  /// updated data function 
+  const handleCatAdded = (newCatData) => {
+    setCats([...cats, newCatData]);
+  };
+///////////////////////////////////////////////
+
+/// close and open modal//////////////////////////////
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+//////////////////////////////////////////////
   return (
+    <>
+    <NavBar onClick={handleShowModal}/>
     <div className="home">
       <h1>Cats Story</h1>
+     
       <div className="cat-container">
-        {cats.map((cat) => (
+        {cats.map((cat, index) => (
           <CatCard
-            key={cat.id}
+            key={index}
             name={cat.name}
             origin={cat.origin}
             temperament={cat.temperament}
@@ -61,7 +80,13 @@ function Home() {
           />
         ))}
       </div>
+      <AdoptionModal
+        show={showModal}
+        handleClose={handleCloseModal}
+        handleCatAdded={handleCatAdded} 
+      />
     </div>
+    </>
   );
 }
 
